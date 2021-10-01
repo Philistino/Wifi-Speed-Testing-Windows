@@ -11,11 +11,8 @@ data_file_name = 'iperf_test_data.csv'
 # Path to iperf3 client
 iperf3_client = 'C:\\iperf-3.1.3-win64\\iperf3.exe'
 
-# Networks to test
+# List your preferred network first to reconnect to it after testing
 test_ssids = ['It Hurts When IP', 'Nacho Wifi']
-
-# Network to connect to at end of testing
-default_network = 'It Hurts When IP'
 
 # -t = time in seconds for test, -P = parallel streams, -O = omit first seconds ramping, -i = seconds between throughput reports - use 0 to disable
 iperf3_args = ['-t 10', '-P 10', '-O 5', '-i 0']
@@ -98,7 +95,7 @@ def test_networks():
         write_to_csv(run_iperf3_client(network, locations[place]))
     # Reconnect to default network
     time.sleep(3)
-    os.system(f'''cmd /c "netsh wlan connect name={default_network}"''')
+    os.system(f'''cmd /c "netsh wlan connect name={test_ssids[0]}"''')
 
 data_in_same_dir(data_file_name)
 test_networks()
