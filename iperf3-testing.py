@@ -6,24 +6,21 @@ from datetime import datetime
 import subprocess
 
 # CSV to track results
-data_file_name = 'iperf_test_data.csv'
+data_file_name = 'iperf_data.csv'
 
 # Path to iperf3 client
 iperf3_client = 'C:\\iperf-3.1.3-win64\\iperf3.exe'
 
-# List your preferred network first to reconnect to it after testing
-test_ssids = ['It Hurts When IP', 'Nacho Wifi']
-
 # -t = time in seconds for test, -P = parallel streams, -O = omit first seconds ramping, -i = seconds between throughput reports - use 0 to disable
 iperf3_args = ['-t 10', '-P 10', '-O 5', '-i 0']
 
-# Locations to test from
 locations = {'1' : 'Couch',
             '2' : 'Office', 
             '3' : 'Table', 
-            '4' : 'Bed', 
+            '4' : 'Bedroom', 
             '5' : 'Kitchen'}
 
+# List preferred network first to reconnect to it after testing
 networks =  {'It Hurts When IP': 
                 {'ssid' : 'It Hurts When IP',
                 'server_ip' : '192.168.1.101',
@@ -35,10 +32,18 @@ networks =  {'It Hurts When IP':
 
 def data_in_same_dir(file_name):
     # Set save location to data file in same folder as python script
+    # https://stackoverflow.com/a/4060259/16625038
     __location__ = os.path.realpath(
         os.path.join(os.getcwd(), os.path.dirname(__file__)))
     global data_file
     data_file = os.path.join(__location__, file_name)
+
+def get_current_network():
+    r = subprocess.run(["netsh", "wlan", "show", "network"], capture_output=True, text=True).stdout
+    ls = r.split("\n")
+    current_ssids = [v.strip() for k,v in (p.split(':') for p in ls if 'SSID' in p)]
+    current_ssid = current_ssids[0]
+    return current_ssid
 
 def run_iperf3_client(network, location):
     print('Running test for: '+  iperf3_args[0].split(' ')[-1] + 's')
@@ -87,15 +92,16 @@ def test_networks():
         if place in locations.keys():
             break
     print(locations[place])
-    for network in test_ssids:
-        os.system(f'''cmd /c "netsh wlan connect name={network}"''')
-        print('Connecting to: ' + network)
-        time.sleep(15)
+    for network in list(networks):
+        if network != get_current_network():
+            os.system(f'''cmd /c "netsh wlan connect name={network}"''')
+            print('Connecting to: ' + network)
+            time.sleep(15)
         # run functions
         write_to_csv(run_iperf3_client(network, locations[place]))
     # Reconnect to default network
     time.sleep(3)
-    os.system(f'''cmd /c "netsh wlan connect name={test_ssids[0]}"''')
+    os.system(f'''cmd /c "netsh wlan connect name={list(networks)[0]}"''')
 
 data_in_same_dir(data_file_name)
 test_networks()
