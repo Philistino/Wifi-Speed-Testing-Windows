@@ -1,16 +1,18 @@
-# path to iperf3 executable
-iperf3_client = 'C:\\iperf-3.1.3-win64\\iperf3.exe'
-# -t = time in seconds for test, -P = parallel streams, -O = omit first seconds ramping, -i = seconds between throughput reports - use 0 to disable
-iperf3_args = ['-t 20', '-P 10', '-O 5', '-i 0']
+# iperf3 client config
+iperf3_client = 'C:\\iperf-3.1.3-win64\\iperf3.exe' # path to iperf3 executable. String
+iperf3_args = ['-t 20', '-P 10', '-O 5']            # -t = time in seconds for test, -P = parallel streams, -O = omit first seconds ramping. Python list
 
-locations = ['Couch', 'Office', 'Table', 'Bedroom', 'Kitchen']
+# locations
+locations = ['Couch', 'Office', 'Table', 'Bedroom', 'Kitchen'] # Locations within your space that you wish to test from. Python list
 
+# network specifications
 [networks]
-    [networks.NachoWifi]
-        ssid = "NachoWifi"
-        server_ip = "192.168.1.101"
-        server_port = "-p 5201"
+    [networks.NachoWifi]                    # Specification for single network. Create as many as you please but make sure to maintain the same format.
+        ssid = "NachoWifi"                  # Name of wifi network that your computer sees. String
+        iperf3_server_ip = "192.168.1.101"  # IP address of machine running iperf3 server. String
+        iperf3_server_port = 5201           # Port that iperf3 server is listening on. The default is 5201. Integer
     [networks.WifiNetwork2]
         ssid = "WifiNetwork2"
-        server_ip = "10.10.4.2"
-        server_port = "-p 5201"
+        iperf3_server_ip = "10.10.4.2"
+        iperf3_server_port = "-p 5201"
+
