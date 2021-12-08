@@ -22,9 +22,9 @@ This script has three main functions:
 
 1. Python 3.6 or newer.
 
-2. speedtest-cli and pandas packages from pypi:
+2. speedtest-cli, pandas, and toml packages from pypi:
 ```
-pip install speedtest-cli pandas
+pip install speedtest-cli pandas toml
 ```
 3. Valid config file saved in the same directory as the script. Please see the example.
 
