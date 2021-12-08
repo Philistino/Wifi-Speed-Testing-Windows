@@ -1,0 +1,16 @@
+# path to iperf3 executable
+iperf3_client = 'C:\\iperf-3.1.3-win64\\iperf3.exe'
+# -t = time in seconds for test, -P = parallel streams, -O = omit first seconds ramping, -i = seconds between throughput reports - use 0 to disable
+iperf3_args = ['-t 20', '-P 10', '-O 5', '-i 0']
+
+locations = ['Couch', 'Office', 'Table', 'Bedroom', 'Kitchen']
+
+[networks]
+    [networks.NachoWifi]
+        ssid = "NachoWifi"
+        server_ip = "192.168.1.101"
+        server_port = "-p 5201"
+    [networks.WifiNetwork2]
+        ssid = "WifiNetwork2"
+        server_ip = "10.10.4.2"
+        server_port = "-p 5201"
