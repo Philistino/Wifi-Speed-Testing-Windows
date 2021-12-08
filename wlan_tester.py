@@ -235,7 +235,8 @@ def main():
         test = speedtestTester(args.location, int(args.rounds))
         tester = TestRunner(test)
         tester.run_tests_and_process_results()
-    connect_to_network(default_network)
+    if current_wifi_network() != default_network:
+        connect_to_network(default_network)
 
 
 if __name__ == "__main__":
