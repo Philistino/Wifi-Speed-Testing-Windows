@@ -142,8 +142,9 @@ class iperf3Tester(Test):
             Path(config["iperf3_client"]),
             "-J",
             "-c",
-            config["networks"][network]["server_ip"],
-            config["networks"][network]["server_port"],
+            config["networks"][network]["iperf3_server_ip"],
+            f"-p {config['networks'][network]['iperf3_server_port']}",
+            "-i 0",
         ] + config["iperf3_args"]
         s = subprocess.check_output(cmd)
         results = json.loads(s)
