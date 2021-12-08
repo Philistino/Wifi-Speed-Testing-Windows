@@ -209,19 +209,18 @@ class speedtestTester(Test):
 class TestRunner:
     def __init__(self, t: Test) -> None:
         self.test = t
-        self.test_type = self.test.test_type
+
+    def record_results(self, results):
+        data_file = Path(Path(__file__).parent, f"{self.test.test_type}_data.csv")
+        for result in results:
+            data_writer = CSVWriter(data_file, result)
+            data_writer.write_data()
+        return data_file
 
     def run_tests_and_process_results(self):
         results = self.test.run_tests()
         data = self.record_results(results)
         throughput_analysis(self.test.test_type, data)
-
-    def record_results(self, results):
-        data_file = Path(Path(__file__).parent, f"{self.test_type}_data.csv")
-        for result in results:
-            data_writer = CSVWriter(data_file, result)
-            data_writer.write_data()
-        return data_file
 
 
 def main():
