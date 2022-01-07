@@ -149,8 +149,7 @@ class iperf3Tester(Test):
         s = subprocess.check_output(cmd)
         results = json.loads(s)
         return {
-            "date": datetime.now().strftime("%a %b %d %Y"),
-            "time": datetime.now().strftime("%H:%M:%S %Z"),
+            "date_time": datetime.now().isoformat(),
             "local_host": results["start"]["connected"][0]["local_host"],
             "remote_host": results["start"]["connected"][0]["remote_host"],
             "sent_speed": round(
@@ -197,8 +196,7 @@ class speedtestTester(Test):
         s.results.share()
         results = s.results.dict()
         return {
-            "date": datetime.now().strftime("%a %b %d %Y"),
-            "time": datetime.now().strftime("%H:%M:%S"),
+            "date_time": datetime.now().isoformat(),
             "location": self.location,
             "network": network,
             "downspeed": round(results["download"] / 1000000),
