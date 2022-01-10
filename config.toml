@@ -1,6 +1,6 @@
 # iperf3 client config
-iperf3_client = 'C:\\iperf-3.1.3-win64\\iperf3.exe' # path to iperf3 executable. Make sure to use double backslashes. String
-iperf3_args = ['-t 20', '-P 10', '-O 5']            # -t = time in seconds for test, -P = parallel streams, -O = omit first seconds ramping. Python list
+iperf3_client = 'C:\\iperf-3.1.3-win64\\iperf3.exe' # Path to iperf3 executable. Make sure to use double backslashes. String
+iperf3_args = ['-t 20', '-P 10', '-O 5']            # Any args you choose. -t = time in seconds for test, -P = parallel streams, -O = omit first seconds ramping. https://iperf.fr/iperf-doc.php for more. Python list
 
 # locations
 locations = ['Couch', 'Office', 'Table', 'Bedroom', 'Kitchen'] # Locations within your space that you wish to test from. Python list
