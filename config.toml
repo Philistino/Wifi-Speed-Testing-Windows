@@ -14,5 +14,5 @@ locations = ['Couch', 'Office', 'Table', 'Bedroom', 'Kitchen'] # Locations withi
     [networks.WifiNetwork2]
         ssid = "WifiNetwork2"
         iperf3_server_ip = "10.10.4.2"
-        iperf3_server_port = "-p 5201"
+        iperf3_server_port = 5201
 
